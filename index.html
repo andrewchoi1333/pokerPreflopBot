@@ -3,22 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Poker Action</title>
+    <title>Poker Preflop Bot</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            margin-top: 200px;
+        }
+        #actionResult {
+
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 10px;
+            width: 50px;
+            font-size: 11px;
+            border: none;
+            color: gray;
+            background-color: transparent;
+            position: relative;
+            top: 12px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Poker Action Calculator</h1>
-    <form id="pokerForm" method="POST"> <!-- Add an id to the form -->
-        <label for="hand">Starting Hand:</label>
+    <form id="pokerForm" method="POST">
+        <label for="hand">Starting hand (98s,j5o,KK):</label>
         <input type="text" id="hand" name="hand"><br><br>
-        <label for="bet">Bet Amount:</label>
+        <label for="bet">Amount to call (BBs):</label>
         <input type="number" id="bet" name="bet"><br><br>
         <label for="position">Position (BB, SB, B, O):</label>
         <input type="text" id="position" name="position"><br><br>
-        <input type="button" id="getActionBtn" value="Get Action"> <!-- Use type="button" to prevent default form submission -->
+        <input type="button" id="getActionBtn" value="Run">
     </form>
-    <div id="actionResult"></div> <!-- Container to display action result -->
+    <div id="actionResult"></div>
 
     <script>
         $(document).ready(function() {
@@ -28,7 +47,7 @@
                     type: 'POST',
                     data: $('#pokerForm').serialize(),
                     success: function(response) {
-                        $('#actionResult').html('<h2>Recommended Action: ' + response.action + '</h2>');
+                        $('#actionResult').html('<h2>' + response.action + '</h2>');
                     },
                     error: function(error) {
                         console.log(error);
